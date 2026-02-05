@@ -12,7 +12,7 @@ sys.path.append("src/")
 from ML2_Asg_Pipeline import preprocess
 
 def test_preprocess_runs_successfully():
-    with open("configs/python-app.yaml", "r") as f:
+    with open("configs/config.yaml", "r") as f:
         cfg = yaml.safe_load(f)
 
     output_path = cfg["2012_path"]
@@ -22,7 +22,7 @@ def test_preprocess_runs_successfully():
 
     # Run the script (same as CI)
     result = subprocess.run(
-        ["python", "src/ML_Asg.py", "--config", "configs/python-app.yaml"],
+        ["python", "src/ML2_preprocess_main.py", "--config", "configs/config.yaml"],
         capture_output=True,
         text=True
     )

@@ -1,13 +1,25 @@
-#Do i need this???
-from ML2_Asg_Pipeline import preprocess
+import argparse
+import yaml
+from ML2_preprocess_main import run_preprocessing
+from ML2_Trainmodel import run_training
+from ML2_Evaldrift import run_drift_evaluation
 
-def main():
-    df_2011 = preprocess("data/day_2011.csv")
-    df_2012 = preprocess("data/day_2012.csv")
+def main(config_path):
+    # Load config
+    with open(config_path, "r") as f:
+        cfg = yaml.safe_load(f)
 
-    print("Preprocessing complete.")
-    print("2011 shape:", df_2011.shape)
-    print("2012 shape:", df_2012.shape)
+    # Step 1: Preprocess data
+    run_preprocessing(cfg["2011_path"], cfg["2012_path"], cfg.get("output_path"))
+
+    # Step 2: Train model
+    run_training(cfg.get("model_path", "best_model.pkl"))
+
+    # Step 3: Evaluate drift
+    run_drift_evaluation(cfg["2011_path"], cfg["2012_path"], cfg.get("model_path", "best_model.pkl"))
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", required=True, help="Path to YAML config file")
+    args = parser.parse_args()
+    main(args.config)
