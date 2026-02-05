@@ -6,9 +6,10 @@ import subprocess
 import joblib
 from sklearn.metrics import mean_squared_error
 import sys
+import numpy as np
 # Included so that this test file can read src/preprocessing_pipeline.py
 sys.path.append("src/") 
-from ML2_Asg_Pipeline import preprocessing_steps
+from ML2_Asg_Pipeline import preprocess
 
 def test_preprocess_runs_successfully():
     with open("configs/python-app.yaml", "r") as f:
@@ -37,16 +38,18 @@ def test_quality_gate():
     model = joblib.load("best_model.pkl")
 
     # Load baseline dataset (2011)
-    df_2011 = pd.read_csv("data/day_2011.csv")
+    df_2011 = preprocess("data/day_2011.csv")
     X_2011, y_2011 = df_2011.drop(columns=["cnt"]), df_2011["cnt"]
     baseline_preds = model.predict(X_2011)
-    baseline_rmse = mean_squared_error(y_2011, baseline_preds, squared=False)
+    baseline_mse = mean_squared_error(y_2011, baseline_preds)
+    baseline_rmse = np.sqrt(baseline_mse)
 
     # Load evaluation dataset (2012)
-    df_2012 = pd.read_csv("data/day_2012.csv")
+    df_2012 = preprocess("data/day_2012.csv")
     X_2012, y_2012 = df_2012.drop(columns=["cnt"]), df_2012["cnt"]
     preds = model.predict(X_2012)
-    rmse = mean_squared_error(y_2012, preds, squared=False)
+    mse = mean_squared_error(y_2012, preds)
+    rmse = np.sqrt(mse)
 
     # Define threshold (e.g., 5% tolerance)
     threshold = baseline_rmse * 1.05 #did not specify how much to do
