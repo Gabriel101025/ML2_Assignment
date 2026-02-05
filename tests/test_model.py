@@ -8,7 +8,7 @@ from sklearn.metrics import mean_squared_error
 import sys
 # Included so that this test file can read src/preprocessing_pipeline.py
 sys.path.append("src/") 
-from ML_Asg_Pipeline import preprocessing_steps
+from ML2_Asg_Pipeline import preprocessing_steps
 
 def test_preprocess_runs_successfully():
     with open("configs/python-app.yaml", "r") as f:
