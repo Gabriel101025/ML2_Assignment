@@ -26,14 +26,6 @@ jobs:
       run: |
         python src/ML2_Asg_Pipeline.py
 
-    - name: Train model
-      run: |
-        python src/ML2_Trainmodel.py
-
-    - name: Evaluate drift
-      run: |
-        python src/ML2_Evaldrift.py
-
     - name: Run tests (Quality Gate)
       run: |
         pytest tests/
