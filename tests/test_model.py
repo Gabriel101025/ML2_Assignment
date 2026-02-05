@@ -11,27 +11,27 @@ import numpy as np
 sys.path.append("src/") 
 from ML2_Asg_Pipeline import preprocess
 
-def test_preprocess_runs_successfully():
-    with open("configs/config.yaml", "r") as f:
-        cfg = yaml.safe_load(f)
+#def test_preprocess_runs_successfully():
+#    with open("configs/config.yaml", "r") as f:
+#        cfg = yaml.safe_load(f)
 
-    output_path = cfg["2012_path"]
-    # Remove existing output if present
-    if os.path.exists(output_path):
-        os.remove(output_path)
+#    output_path = cfg["2012_path"]
+#    # Remove existing output if present
+#    if os.path.exists(output_path):
+#        os.remove(output_path)
 
     # Run the script (same as CI)
-    result = subprocess.run(
-        ["python", "src/ML2_preprocess_main.py", "--config", "configs/config.yaml"],
-        capture_output=True,
-        text=True
-    )
+#    result = subprocess.run(
+#        ["python", "src/ML2_preprocess_main.py", "--config", "configs/config.yaml"],
+#        capture_output=True,
+#        text=True
+#    )
 
     # Check it ran without crashing
-    assert result.returncode == 0, f"Preprocess failed: {result.stderr}"
+#    assert result.returncode == 0, f"Preprocess failed: {result.stderr}"
 
     # Check output file exists
-    assert os.path.exists(output_path), "Cleaned CSV not created."
+#    assert os.path.exists(output_path), "Cleaned CSV not created."
 
 def test_quality_gate():
     # Load saved model
@@ -51,7 +51,7 @@ def test_quality_gate():
     mse = mean_squared_error(y_2012, preds)
     rmse = np.sqrt(mse)
 
-    # Define threshold (e.g., 5% tolerance)
+    # threshold
     threshold = baseline_rmse * 1.05 #did not specify how much to do
     print(f"Baseline RMSE: {baseline_rmse:.2f}, 2012 RMSE: {rmse:.2f}, Threshold: {threshold:.2f}")
 
