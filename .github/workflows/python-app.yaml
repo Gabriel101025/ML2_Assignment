@@ -28,4 +28,4 @@ jobs:
 
     - name: Run tests (Quality Gate)
       run: |
-        pytest tests/
+        PYTHONPATH=. pytest 

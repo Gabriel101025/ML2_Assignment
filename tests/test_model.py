@@ -5,13 +5,12 @@ import yaml
 import subprocess
 import joblib
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from ML2_Asg_Pipeline import preprocess
 from sklearn.model_selection import train_test_split
 import numpy as np
 import sys
 # Included so that this test file can read src/preprocessing_pipeline.py
 sys.path.append("src/") 
-from src.ML2_Asg_Pipeline import preprocess
+from ML2_Asg_Pipeline import preprocess
 
 
 def test_quality_gate():
