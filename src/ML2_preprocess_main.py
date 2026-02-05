@@ -16,7 +16,7 @@ def main(config_path):
     run_training(cfg.get("model_path", "best_model.pkl"))
 
     # Step 3: Evaluate drift
-    run_drift_evaluation(cfg["2011_path"], cfg["2012_path"], cfg.get("model_path", "best_model.pkl"))
+    run_drift_evaluation(cfg["2011_path"], cfg["2012_path"], cfg.get("model_path", "model.pkl"))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

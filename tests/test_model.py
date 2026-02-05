@@ -35,7 +35,7 @@ def test_preprocess_runs_successfully():
 
 def test_quality_gate():
     # Load saved model
-    model = joblib.load("best_model.pkl")
+    model = joblib.load("model.pkl")
 
     # Load baseline dataset (2011)
     df_2011 = preprocess("data/day_2011.csv")

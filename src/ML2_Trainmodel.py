@@ -13,8 +13,8 @@ def main():
     rf = RandomForestRegressor(n_estimators=100, random_state=42)
     rf.fit(X_train, y_train)
     #Technically best model
-    joblib.dump(rf, "best_model.pkl")
-    print("Model trained and saved as best_model.pkl")
+    joblib.dump(rf, "model.pkl")
+    print("Model trained and saved as model.pkl")
 
 if __name__ == "__main__":
     main()
