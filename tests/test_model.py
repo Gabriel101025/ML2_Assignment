@@ -32,31 +32,27 @@ def test_preprocess_runs_successfully():
     # Check output file exists
     assert os.path.exists(output_path), "Cleaned CSV not created."
 
-
-
 def test_quality_gate():
-    # Step 1: Load saved model
-    model = joblib.load("model.pkl")
+    # Load saved model
+    model = joblib.load("best_model.pkl")
 
-    # Step 2: Load evaluation dataset (2012 data)
-    df = pd.read_csv("data/day_2012.csv")
-    X = df.drop(columns=["cnt"])
-    y = df["cnt"]
+    # Load baseline dataset (2011)
+    df_2011 = pd.read_csv("data/day_2011.csv")
+    X_2011, y_2011 = df_2011.drop(columns=["cnt"]), df_2011["cnt"]
+    baseline_preds = model.predict(X_2011)
+    baseline_rmse = mean_squared_error(y_2011, baseline_preds, squared=False)
 
-    # Step 3: Make predictions
-    preds = model.predict(X)
-    rmse = mean_squared_error(y, preds, squared=False)
+    # Load evaluation dataset (2012)
+    df_2012 = pd.read_csv("data/day_2012.csv")
+    X_2012, y_2012 = df_2012.drop(columns=["cnt"]), df_2012["cnt"]
+    preds = model.predict(X_2012)
+    rmse = mean_squared_error(y_2012, preds, squared=False)
 
-    # Step 4: Define threshold (baseline RMSE from Task 2 results)
-    baseline_rmse = 600   # Example: 2011 RMSE was ~525, 2012 was ~731
-    threshold = baseline_rmse * 1.2  # Allow 20% tolerance
+    # Define threshold (e.g., 5% tolerance)
+    threshold = baseline_rmse * 1.05 #did not specify how much to do
+    print(f"Baseline RMSE: {baseline_rmse:.2f}, 2012 RMSE: {rmse:.2f}, Threshold: {threshold:.2f}")
 
-    print(f"RMSE on 2012 data: {rmse:.2f}, Threshold: {threshold:.2f}")
-
-    # Step 5: Quality Gate check
-    if rmse > threshold:
-        print("❌ Quality Gate FAILED: Model performance degraded.")
-        sys.exit(1)  # Fail workflow
-    else:
-        print("✅ Quality Gate PASSED: Model performance acceptable.")
+    # Quality Gate check
+    assert rmse <= threshold, "❌ Quality Gate FAILED: Model performance degraded."
+    print("✅ Quality Gate PASSED: Model performance acceptable.")
 

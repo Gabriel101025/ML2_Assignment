@@ -5,7 +5,7 @@ from ML2_Asg_Pipeline import preprocess
 
 def main():
     model = joblib.load("model.pkl")
-
+    #Set datasets
     df_2011 = preprocess("data/day_2011.csv")
     df_2012 = preprocess("data/day_2012.csv")
 
@@ -20,7 +20,7 @@ def main():
     y_2012 = df_2012["cnt"]
     preds_2012 = model.predict(X_2012)
     rmse_2012 = mean_squared_error(y_2012, preds_2012, squared=False)
-
+    #Compare
     print(f"2011 RMSE: {rmse_2011:.2f}")
     print(f"2012 RMSE: {rmse_2012:.2f}")
 

@@ -2,6 +2,7 @@ import pandas as pd
 
 def load_data(path):
     df = pd.read_csv(path)
+    #Just drop dteday, a hinderance unless done with proper cleaning
     if "dteday" in df.columns:
         df = df.drop(columns=["dteday"])
     return df
