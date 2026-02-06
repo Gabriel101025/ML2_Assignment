@@ -1,4 +1,3 @@
-#Actual
 name: Python application
 
 on:
@@ -28,4 +27,4 @@ jobs:
 
     - name: Run tests (Quality Gate)
       run: |
-        PYTHONPATH=. pytest 
+        pytest tests/

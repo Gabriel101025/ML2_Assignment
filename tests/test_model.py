@@ -1,4 +1,3 @@
-#Practical
 import os
 import pandas as pd
 import yaml
@@ -8,7 +7,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 import numpy as np
 import sys
-# Included so that this test file can read src/preprocessing_pipeline.py
+# Included so that this test file can read src/ML2_Asg_Pipeline.py
 sys.path.append("src/") 
 from ML2_Asg_Pipeline import preprocess
 
